@@ -6,22 +6,41 @@
     <title>Free Currency Converter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    <script src="main.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>    <script src="main.js"></script>
 </head>
 <body onload="loadCurrencies()">
     <div class="container">
         <form action="get">
-            <div class="row">
-                <span>From:</span><select name="" id="from"></select>
-                <span>To:</span> <select name="" id="to"></select>
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Currencies</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="currency">
+                            <span>From:</span><select onChange="convertCurrency()" id="from"></select>
+                            <span>To:</span> <select onchange="convertCurrency()" id="to"></select>
+                        </div>
+                    </div>
+                    <div class="panel-heading">
+                        <h3>Amount</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="amount">
+                            <input type="text" onInput="convertCurrency()" name="from" id="amount-from">
+                            <input type="text" id="result">
+                        </div>
+                        <div class="amount-tag">
+                            <p><span>From</span> <span>To</span></p>
+                            
+                        </div>
+                    </div>
+                    <div class="panel-footer submit">
+                        <input type="submit" onClick="convertCurrency()" value="Convert" class="btn btn-primary">
+                    </div>
+                </div>
             </div>
-            <div class="row">
-                <span> Amount:</span>
-                <input type="text" name="from"> ===> <input type="text">
-            </div>
-            <input type="submit" value="Convert" class="btn btn-primary">
         </form>
     </div>
 </body>
