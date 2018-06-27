@@ -47,6 +47,16 @@
         </form>
     </div>
 
-    <script src="./js/sw-registration.js"></script>
+    <script>
+        if('serviceWorker' in navigator){
+            navigator.serviceWorker.register('./js/service-worker.js')
+                .then((registration)=>{
+                    console.log('Registered:', registration);
+                })
+                .catch((error)=>{
+                    console.log('Regstration Failed: ', error);
+                });
+    }
+    </script>
 </body>
 </html>
