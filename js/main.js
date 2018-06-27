@@ -19,15 +19,16 @@ function convertCurrency(){
     const to = document.getElementById('to').value;
     const amount = document.getElementById('amount-from').value;
     let result = document.getElementById('result')
-    
-    if(amount>0){
-        fetch(`https://free.currencyconverterapi.com/api/v5/convert?q=${from}_${to}&compact=y`)
+    const query = `${from}_${to}`
+    if(from.length>0 && to.length){
+
+        fetch(`https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=y`)
         .then(response=>response.json())
         .then((value)=>{
-            console.log(value)
+            newResult = amount*(value[query].val)
+            if(newResult != undefined){
+                result.innerHTML = parseFloat(newResult);
+            }
         })
     }
-
-
 }
-
