@@ -1,4 +1,4 @@
-var cacheName = 'static-cache-v3';
+var cacheName = 'static-cache-v4';
 var urlsToCache = [
     'index.html',
     'main.css'
@@ -9,12 +9,12 @@ self.addEventListener('install', function (event){
         caches.open(cacheName)
         .then(function (cache){
             return cache.addAll(urlsToCache);
-            console.log('urls have been cached');
         })
     );
 });
 
-self.addEventListener(fetch, (event)=>{
+self.addEventListener('fetch', (event)=>{
+    console.log(event.request);
     event.respondWith(
         caches.match(event.request)
         .then((response)=>{
@@ -30,7 +30,7 @@ function fetchAndCache(url){
             if(!response.ok){
                 throw Error(response.statusText);
             }
-            return caches.open(CACHE_NAME)
+            return caches.open(cacheName)
                 .then((cache)=>{
                     cache.put(url, response.clone());
                     return response;
