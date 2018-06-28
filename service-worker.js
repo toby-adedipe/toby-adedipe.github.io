@@ -1,28 +1,23 @@
-//self.addEventListener('fetch', (event)=>{
-//
-//})
-
-const CACHE_NAME = 'static-cache';
-const urlsToCache = [
-    '.',
+var cacheName = 'static-cache-v3';
+var urlsToCache = [
     'index.html',
-    'main.css',
-    'js/main.js'
+    'main.css'
 ];
 
-self.addEventListener('install', (event)=>{
+self.addEventListener('install', function (event){
     event.waitUntil(
-        caches.open(CACHE_NAME)
-        .then((cache)=>{
+        caches.open(cacheName)
+        .then(function (cache){
             return cache.addAll(urlsToCache);
+            console.log('urls have been cached');
         })
-    )
+    );
 });
 
-self.addEventListener(fetch, ()=>{
+self.addEventListener(fetch, (event)=>{
     event.respondWith(
         caches.match(event.request)
-        .then(()=>{
+        .then((response)=>{
             return response || fetchAndCache(event.request);
         })
     )
