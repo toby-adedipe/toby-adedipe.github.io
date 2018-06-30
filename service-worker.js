@@ -1,4 +1,4 @@
-const cacheName = 'converter-cache-v7';
+const cacheName = 'converter-cache-v9';
 const urlsToCache = [
     'index.html',
     'main.css',
@@ -15,6 +15,7 @@ self.addEventListener('install', (event)=>{
 });
 
 // delete cache that is not being used
+
 self.addEventListener('activate', (event)=>{
     event.waitUntil(
         caches.keys().then((names)=>{
