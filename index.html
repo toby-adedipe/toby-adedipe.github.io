@@ -31,7 +31,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="amount">
-                            <input type="text" name="from" id="amount-from">
+                            <input type="number" name="from" id="amount-from">
                             <p>Result: <span id="result"></span></p>
                         </div>
                         <div class="amount-tag">
@@ -46,16 +46,6 @@
         </form>
     </div>
 
-    <script>
-        if('serviceWorker' in navigator){
-            navigator.serviceWorker.register('/service-worker.js')
-                .then((registration)=>{
-                    console.log('Service worker works!!!');
-                })
-                .catch((error)=>{
-                    console.log('Regstration Failed: ', error);
-                });
-    }
-    </script>
+    <script src="./sw-reg.js"></script>
 </body>
 </html>

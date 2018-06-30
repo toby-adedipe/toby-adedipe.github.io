@@ -1,18 +1,37 @@
-var cacheName = 'static-cache-v4';
-var urlsToCache = [
+const cacheName = 'converter-cache-v7';
+const urlsToCache = [
     'index.html',
-    'main.css'
+    'main.css',
+    'https://free.currencyconverterapi.com/api/v5/currencies'
 ];
 
-self.addEventListener('install', function (event){
+self.addEventListener('install', (event)=>{
     event.waitUntil(
         caches.open(cacheName)
-        .then(function (cache){
+        .then((cache)=>{
             return cache.addAll(urlsToCache);
         })
     );
 });
 
+// delete cache that is not being used
+self.addEventListener('activate', (event)=>{
+    event.waitUntil(
+        caches.keys().then((names)=>{
+            return Promise.all(
+                names.filter((name)=>{
+                    return name.startsWith('converter-') &&
+                    name != cacheName;
+                })
+                .map((name)=>{
+                    return caches.delete(name);
+                })
+            );
+        })
+    );
+})
+
+//serve or cache new items from the cache 
 self.addEventListener('fetch', (event)=>{
     console.log(event.request);
     event.respondWith(
