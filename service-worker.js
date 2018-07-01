@@ -34,7 +34,6 @@ self.addEventListener('activate', (event)=>{
 
 //serve or cache new items from the cache 
 self.addEventListener('fetch', (event)=>{
-    console.log(event.request);
     event.respondWith(
         caches.match(event.request)
         .then((response)=>{

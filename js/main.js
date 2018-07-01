@@ -14,6 +14,13 @@ function loadCurrencies(){
         })
 }
 
+// OPEN INDEXEDDB
+const dbPromise = idb.open('conversionRates', 1, upgradeDb =>{
+    upgradeDb.createObjectStore('rates'); 
+});
+
+
+
 function convertCurrency(){
     const from=document.getElementById('from').value;
     const to = document.getElementById('to').value;
@@ -25,10 +32,32 @@ function convertCurrency(){
         fetch(`https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=y`)
         .then(response=>response.json())
         .then((value)=>{
-            newResult = amount*(value[query].val)
+            newResult = amount*(value[query].val);
             if(newResult != undefined){
                 result.innerHTML = parseFloat(newResult);
             }
-        })
+
+            // SAVE THE VALUE OF THE CONVERTED QUERIES INTO THE DATABASE
+            dbPromise.then(function(db){
+                if (!db) return;
+
+                const tx = db.transaction('rates', 'readwrite');
+                const store = tx.objectStore('rates');
+                store.put(value[query].val, query);
+                return tx.complete;
+            });
+        }).catch(err=>{
+            dbPromise.then(db=>{
+                if(!db) return;
+                
+                const tx = db.transaction('rates');
+                const store = tx.objectStore('rates');
+                return store.get(query); 
+            }).then(val=>{
+                newAmount = amount*val;
+                result.innerHTML = parseFloat(newAmount);
+            });
+        });
     }
+    
 }
